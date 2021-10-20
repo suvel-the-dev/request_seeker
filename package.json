@@ -1,0 +1,26 @@
+{
+  "name": "request-seeker",
+  "version": "1.0.1",
+  "description": "A express middleware that will help you to log the details of the request that are sent to your express server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suvel-the-dev/request_seeker.git"
+  },
+  "keywords": [
+    "express",
+    "server",
+    "log",
+    "request",
+    "node.js"
+  ],
+  "author": "Suvel Rathneswar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/suvel-the-dev/request_seeker/issues"
+  },
+  "homepage": "https://github.com/suvel-the-dev/request_seeker#readme"
+}
