@@ -1,7 +1,7 @@
 {
   "name": "request-seeker",
-  "version": "1.0.1",
-  "description": "A express middleware that will help you to log the details of the request that are sent to your express server",
+  "version": "1.1.1",
+  "description": "A express middleware that will help you to log the details of the request that are sent to your express server and also log the response that is sent back to client",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,6 +15,7 @@
     "server",
     "log",
     "request",
+    "response",
     "node.js"
   ],
   "author": "Suvel Rathneswar",

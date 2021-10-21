@@ -1,15 +1,24 @@
-/* ------------------- The Request Seeker (O_O) ------------------- */
+/* ------------------- The Request Seeker ------------------- */
+/*
+     ██╗ ██████╗          ██████╗ ██╗ 
+    ██╔╝██╔═══██╗        ██╔═══██╗╚██╗
+    ██║ ██║   ██║        ██║   ██║ ██║
+    ██║ ██║   ██║        ██║   ██║ ██║
+    ╚██╗╚██████╔╝███████╗╚██████╔╝██╔╝
+     ╚═╝ ╚═════╝ ╚══════╝ ╚═════╝ ╚═╝
+*/
 
 /** HOW IT IS HELPFUL?
 
 This middleware will help you to log the details of the request that are sent to
-the server.
+the server and also the response that is sent to the client.
 
   The log will contain details of:
   1. ENDPOINT (aka route)
   2. METHOD (request method)
   3. BODY (payload that is sent in body of the request)
   4. QUERY (parameter that sent in query string)
+  5. RESPONSE BODY (the response that is send by that particular route) -- optional
 */
 
 /** HOW TO USE
@@ -21,16 +30,19 @@ the server.
 
 1. Import the middleware
 .. var app = express();
--> var requestSeeker = require('./middleware/requestSeeker');
+-> var requestSeeker = require('request-seeker');
 
 2. use it
--> app.use(requestSeeker);
+-> app.use(function(args){
+        requestSeeker(args,<true|false>)
+    });
 .. app.get('/', (req, res) => {
 */
 
 /* References
 1. https://stackoverflow.com/a/62507534
 2. https://blog.bitsrc.io/coloring-your-terminal-using-nodejs-eb647d4af2a2
+3. https://www.youtube.com/watch?v=1jhdfS1Bwcc
 */
 
 function getColoredKey(color, { key, value }) {
@@ -62,18 +74,46 @@ function getColoredKey(color, { key, value }) {
     console.log(colorCode, key, value)
 }
 
-function requestSeeker(req, res, next) {
+function printRequestSeekerBlock(printLog) {
+    console.log(`
+     ██╗ ██████╗          ██████╗ ██╗ 
+    ██╔╝██╔═══██╗        ██╔═══██╗╚██╗
+    ██║ ██║   ██║        ██║   ██║ ██║
+    ██║ ██║   ██║        ██║   ██║ ██║
+    ╚██╗╚██████╔╝███████╗╚██████╔╝██╔╝
+     ╚═╝ ╚═════╝ ╚══════╝ ╚═════╝ ╚═╝                 
+    `)
+    printLog()
+    console.log("\n" + "==================" + "\n")
+}
+
+function requestSeeker(req, res, next, {
+    showResponseLog = false
+}) {
     let requestMethod = req.method;
     let endPoint = req.url
     let ogUrl = req.originalUrl;
     let bodyPayload = req.body;
     let queryParam = req.queryParam;
-    console.log("\n" + "----- request seeker (O_O) --------" + "\n")
-    getColoredKey('red', { key: 'ENDPOINT', value: endPoint });
-    getColoredKey('yellow', { key: 'METHOD', value: requestMethod });
-    getColoredKey('blue', { key: 'BODY', value: !bodyPayload ? bodyPayload : JSON.stringify(bodyPayload, null, 2) });
-    getColoredKey('green', { key: 'QUERY', value: !queryParam ? queryParam : JSON.stringify(queryParam, null, 2) });
-    console.log("\n" + "-------------" + "\n")
+
+    printRequestSeekerBlock(function () {
+        console.log("\n" + "+------- REQUEST LOG -------+" + "\n")
+        getColoredKey('red', { key: 'ENDPOINT', value: endPoint });
+        getColoredKey('yellow', { key: 'METHOD', value: requestMethod });
+        getColoredKey('blue', { key: 'BODY', value: !bodyPayload ? bodyPayload : JSON.stringify(bodyPayload, null, 2) });
+        getColoredKey('green', { key: 'QUERY', value: !queryParam ? queryParam : JSON.stringify(queryParam, null, 2) });
+    })
+
+    if (showResponseLog) {
+        let oldSend = res.send;
+        res.send = function (data) {
+            printRequestSeekerBlock(function () {
+                console.log("\n" + "+------- RESPONSE LOG -------+" + "\n")
+                getColoredKey('red', { key: 'RESPONSE BODY', value: !data ? data : JSON.stringify(data, null, 2) });
+            })
+            oldSend.apply(res, arguments);
+        }
+    }
     // the below function is called to continue with next flow
     next();
 }
