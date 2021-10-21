@@ -15,20 +15,25 @@ the server and also the response that is sent to the client.
 
 #### HOW TO USE
 
+```
     .. - normal code
     -> - code to add
+```
 
 1. Import the middleware
 
-    .. var app = express();
-    -> var requestSeeker = require('request-seeker');
-
+```
+  .. var app = express();
+  -> var requestSeeker = require('request-seeker');
+```
 2. use it
 
-    -> app.use(function(args){
-        requestSeeker(args,<true|false>)
-    });
-    .. app.get('/', (req, res) => {
+```
+  -> app.use(function(args){
+      requestSeeker(args,<true|false>)
+  });
+  .. app.get('/', (req, res) => {
+```
 
 ## References
 1. [Logging request details](https://stackoverflow.com/a/62507534)
