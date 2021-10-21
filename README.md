@@ -1,7 +1,7 @@
 # request-seeker
 A express middleware that will help you to log the details of the request that are sent to your express server and also log the response that is sent back to client.
 
-### HOW IT IS HELPFUL?
+#### HOW IT IS HELPFUL?
 
 This middleware will help you to log the details of the request that are sent to
 the server and also the response that is sent to the client.
