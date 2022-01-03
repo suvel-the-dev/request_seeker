@@ -74,21 +74,35 @@ function getColoredKey(color, { key, value }) {
     console.log(colorCode, key, value)
 }
 
-function printRequestSeekerBlock(printLog) {
-    console.log(`
-     ██╗ ██████╗          ██████╗ ██╗ 
-    ██╔╝██╔═══██╗        ██╔═══██╗╚██╗
-    ██║ ██║   ██║        ██║   ██║ ██║
-    ██║ ██║   ██║        ██║   ██║ ██║
-    ╚██╗╚██████╔╝███████╗╚██████╔╝██╔╝
-     ╚═╝ ╚═════╝ ╚══════╝ ╚═════╝ ╚═╝                 
-    `)
+function printRequestSeekerBlock(hideLogo, printLog) {
+
+    let paddingPlaceholder = ""
+    if (!hideLogo) {
+        paddingPlaceholder = `
+
+        ━━━━━━━━━ ▼ ━━━━━━━━━
+        
+        `
+    }
+    else {
+        paddingPlaceholder = `
+        ██╗ ██████╗          ██████╗ ██╗ 
+       ██╔╝██╔═══██╗        ██╔═══██╗╚██╗
+       ██║ ██║   ██║        ██║   ██║ ██║
+       ██║ ██║   ██║        ██║   ██║ ██║
+       ╚██╗╚██████╔╝███████╗╚██████╔╝██╔╝
+        ╚═╝ ╚═════╝ ╚══════╝ ╚═════╝ ╚═╝                 
+       `
+     }
+
+    console.log(paddingPlaceholder)
     printLog()
     console.log("\n" + "==================" + "\n")
 }
 
 function requestSeeker(req, res, next, {
-    showResponseLog = false
+    showResponseLog = false,
+    hideLogo = false
 }) {
     let requestMethod = req.method;
     let endPoint = req.url
@@ -96,7 +110,7 @@ function requestSeeker(req, res, next, {
     let bodyPayload = req.body;
     let queryParam = req.queryParam;
 
-    printRequestSeekerBlock(function () {
+    printRequestSeekerBlock(hideLogo, function () {
         console.log("\n" + "+------- REQUEST LOG -------+" + "\n")
         getColoredKey('red', { key: 'ENDPOINT', value: endPoint });
         getColoredKey('yellow', { key: 'METHOD', value: requestMethod });
