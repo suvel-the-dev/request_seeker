@@ -93,7 +93,7 @@ function printRequestSeekerBlock(hideLogo, printLog) {
        ╚██╗╚██████╔╝███████╗╚██████╔╝██╔╝
         ╚═╝ ╚═════╝ ╚══════╝ ╚═════╝ ╚═╝                 
        `
-     }
+    }
 
     console.log(paddingPlaceholder)
     printLog()
@@ -121,7 +121,7 @@ function requestSeeker(req, res, next, {
     if (showResponseLog) {
         let oldSend = res.send;
         res.send = function (data) {
-            printRequestSeekerBlock(function () {
+            printRequestSeekerBlock(hideLogo, function () {
                 console.log("\n" + "+------- RESPONSE LOG -------+" + "\n")
                 getColoredKey('red', { key: 'RESPONSE BODY', value: !data ? data : JSON.stringify(data, null, 2) });
             })
