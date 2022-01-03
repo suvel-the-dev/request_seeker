@@ -77,7 +77,7 @@ function getColoredKey(color, { key, value }) {
 function printRequestSeekerBlock(hideLogo, printLog) {
 
     let paddingPlaceholder = ""
-    if (!hideLogo) {
+    if (hideLogo) {
         paddingPlaceholder = `
 
         ━━━━━━━━━ ▼ ━━━━━━━━━
