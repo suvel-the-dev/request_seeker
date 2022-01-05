@@ -13,6 +13,22 @@ the server and also the response that is sent to the client.
   4. QUERY (parameter that sent in query string)
   5. RESPONSE BODY (the response that is send by that particular route) -- optional
 
+#### API Explanation
+
+| arg no. |   arg   | desc                          | required |
+|:-------:|:-------:|-------------------------------|:--------:|
+|    1    |   req   |                               |    yes   |
+|    2    |   res   |                               |    yes   |
+|    3    |   nxt   |                               |    yes   |
+|    4    | options | used for customizing the logs |          |
+
+**Options**
+
+| att             | desc                                             | default |
+|-----------------|--------------------------------------------------|---------|
+| showResponseLog | print the response that is sent to every request | false   |
+| hideLogo        | toggle between showing or hiding the logo        | false   |
+
 #### HOW TO USE
 
 ```
@@ -29,9 +45,9 @@ the server and also the response that is sent to the client.
 2. use it
 
 ```
-  -> app.use(function(args){
-      requestSeeker(args,<true|false>)
-  });
+app.use((req, res, next) => {
+    requestSeeker(req, res, next, { showResponseLog: true, hideLogo: true })
+})
   .. app.get('/', (req, res) => {
 ```
 

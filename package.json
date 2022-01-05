@@ -1,6 +1,6 @@
 {
   "name": "request-seeker",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "A express middleware that will help you to log the details of the request that are sent to your express server and also log the response that is sent back to client",
   "main": "index.js",
   "scripts": {
