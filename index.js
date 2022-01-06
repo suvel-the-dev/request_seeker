@@ -120,11 +120,15 @@ function requestSeeker(req, res, next, {
 
     if (showResponseLog) {
         let oldSend = res.send;
+        let count = 0;
         res.send = function (data) {
-            printRequestSeekerBlock(hideLogo, function () {
-                console.log("\n" + "+------- RESPONSE LOG -------+" + "\n")
-                getColoredKey('red', { key: 'RESPONSE BODY', value: !data ? data : JSON.stringify(data, null, 2) });
-            })
+            if (count == 0) {
+                printRequestSeekerBlock(hideLogo, function () {
+                    console.log("\n" + "+------- RESPONSE LOG -------+" + "\n")
+                    getColoredKey('red', { key: 'RESPONSE BODY', value: !data ? data : JSON.stringify(data, null, 2) });
+                })
+                count++;
+            }
             oldSend.apply(res, arguments);
         }
     }
